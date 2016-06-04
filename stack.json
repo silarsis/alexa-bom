@@ -1,0 +1,62 @@
+
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "CloudFormation for Alexa BoM Skill",
+    "Metadata": {
+
+    },
+    "Parameters": {
+    
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+      "elasticacheCacheCluster": {
+         "Type": "AWS::ElastiCache::CacheCluster",
+         "Properties":
+         {
+            "AZMode": "",
+            "CacheNodeType": "",
+            "CacheParameterGroupName": "",
+            "CacheSecurityGroupNames": [ "" ],
+            "CacheSubnetGroupName": "",
+            "ClusterName": "",
+            "Engine": "",
+            "EngineVersion": "",
+            "NotificationTopicArn": "",
+            "NumCacheNodes": "",
+            "Port": "",
+            "PreferredAvailabilityZone": "",
+            "PreferredAvailabilityZones": [ "" ],
+            "PreferredMaintenanceWindow": "",
+            "SnapshotArns": ["" ],
+            "SnapshotRetentionLimit": "",
+            "SnapshotWindow": "",
+            "VpcSecurityGroupIds": [ "" ]
+         }
+      }
+    },
+    
+    "s3Bucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "AccessControl": "Private | PublicRead | PublicReadWrite | AuthenticatedRead | LogDeliveryWrite | BucketOwnerRead | BucketOwnerFullControl",
+        "BucketName": "",
+        "CorsConfiguration": {},
+        "LifecycleConfiguration": {},
+        "NotificationConfiguration": {},
+        "VersioningConfiguration": {},
+        "WebsiteConfiguration": {},
+        "Tags": [] 
+      }
+    }
+    
+    "Outputs": {
+
+    }
+}
+    

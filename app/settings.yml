@@ -1,0 +1,7 @@
+---
+project: bom
+default-region: us-east-1
+code-bucket: gordon-bom-f9eaa9ec
+apps:
+  - gordon.contrib.lambdas
+  - bom

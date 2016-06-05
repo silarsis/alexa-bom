@@ -1,8 +1,8 @@
 lambdas:
-  helloworld:
-    code: helloworld
+  bom:
+    code: bom
     handler: code.handler
     runtime: python
-    #description: Simple functions in python which says hello
+    description: Collect data from BoM and report back to user
     #role:
     #memory:

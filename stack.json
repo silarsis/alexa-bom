@@ -15,6 +15,25 @@
 
     },
     "Resources": {
+      
+      "LambdaRole": {
+         "Type": "AWS::IAM::Role",
+         "Properties": {
+            "AssumeRolePolicyDocument": {
+               "Version" : "2012-10-17",
+               "Statement": [ {
+                  "Effect": "Allow",
+                  "Principal": {
+                     "Service": [ "lambda.amazonaws.com" ]
+                  },
+                  "Action": [ "sts:AssumeRole" ]
+               } ]
+            },
+            "Path": "",
+            "Policies": [  ]
+         }
+      },
+      
       "elasticacheCacheCluster": {
          "Type": "AWS::ElastiCache::CacheCluster",
          "Properties":
@@ -38,24 +57,29 @@
             "SnapshotWindow": "",
             "VpcSecurityGroupIds": [ "" ]
          }
+      },
+      
+      
+      "s3Bucket": {
+        "Type": "AWS::S3::Bucket",
+        "Properties": {
+          "AccessControl": "Private | PublicRead | PublicReadWrite | AuthenticatedRead | LogDeliveryWrite | BucketOwnerRead | BucketOwnerFullControl",
+          "BucketName": "",
+          "CorsConfiguration": {},
+          "LifecycleConfiguration": {},
+          "NotificationConfiguration": {},
+          "VersioningConfiguration": {},
+          "WebsiteConfiguration": {},
+          "Tags": [] 
+        }
       }
     },
-    
-    "s3Bucket": {
-      "Type": "AWS::S3::Bucket",
-      "Properties": {
-        "AccessControl": "Private | PublicRead | PublicReadWrite | AuthenticatedRead | LogDeliveryWrite | BucketOwnerRead | BucketOwnerFullControl",
-        "BucketName": "",
-        "CorsConfiguration": {},
-        "LifecycleConfiguration": {},
-        "NotificationConfiguration": {},
-        "VersioningConfiguration": {},
-        "WebsiteConfiguration": {},
-        "Tags": [] 
-      }
-    }
-    
     "Outputs": {
+      
+      "LambdaRole" : {
+        "Value" : { "Ref": "LambdaRole" }
+      }
+      
 
     }
 }

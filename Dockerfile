@@ -1,5 +1,8 @@
-FROM python:2.7
-RUN pip install gordon
+FROM alpine:latest
+RUN apk add --update curl
+RUN curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
+
 ADD app /app
 WORKDIR /app
-RUN gordon build
+ENTRYPOINT apex
+CMD ['deploy']

@@ -1,8 +1,0 @@
-lambdas:
-  bom:
-    code: bom
-    handler: code.handler
-    runtime: python
-    description: Collect data from BoM and report back to user
-    #role:
-    #memory:

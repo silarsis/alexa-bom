@@ -7,8 +7,7 @@ Structure:
   - Redis storage for retrieved XML
   - Cloudformation to deploy
 
-Using Gordon (https://github.com/jorgebastida/gordon) for build and deploy
-of the lambda because I want to try it out.
+Using apex for deploy of lambda.
 
 Building the Dockerfile will deploy the lambda. The associated resources
 are built from stack.json

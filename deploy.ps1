@@ -1,7 +1,5 @@
 $ErrorActionPreference = 'Stop'
 
-docker pull cgswong/aws:aws
-
 Function Invoke-AWS {
   # AWS CLI command to run
   [String] $command
@@ -58,3 +56,5 @@ Function main {
   Deploy-Lambda
 }
 
+docker pull cgswong/aws:aws
+main

@@ -5,4 +5,3 @@ RUN curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
 ADD app /app
 WORKDIR /app
 ENTRYPOINT apex
-CMD ['deploy']

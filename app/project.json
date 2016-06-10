@@ -1,5 +1,5 @@
 {
-  "name": "bom",
-  "description": "Alexa skill to report weather from BoM",
-  "role": "arn:aws:iam::XXX:role/lambda"
+    "name":  "bom",
+    "description":  "Alexa skill to report weather from BoM",
+    "role":  "arn:aws:iam::566964866387:role/lambda"
 }

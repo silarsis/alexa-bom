@@ -1,34 +1,36 @@
 $ErrorActionPreference = 'Stop'
 
 Function Invoke-AWS {
-  # AWS CLI command to run
-  [String] $command
-  [String] $stack
+  [CmdletBinding()]
+  Param(
+  [String[]] $command = "",
+  [String] $volume = "",
   [String] $image = "cgswong/aws:aws"
+  )
 
-  if ($stack -ne $null) {
-    $stack_cmd = " -v ${$stack}:/app/stack.json"
+  if ($volume -ne "") {
+    $volume = "-v", "$(Convert-Path($volume)):/app/stack.json"
   } else {
-    $stack_cmd = ""
+    $volume = ""
   }
 
   Invoke-Expression @"
-    docker run -it `
-      -e AWS_ACCESS_KEY_ID="$((Get-AWSCredentials -ProfileName alexa).GetCredentials().AccessKey)" `
-      -e AWS_SECRET_ACCESS_KEY="$((Get-AWSCredentials -ProfileName alexa).GetCredentials().SecretKey)" `
-      -e AWS_REGION='us-east-1' `
-      $stack_cmd `
-      $image $command
+    docker run -it -e AWS_ACCESS_KEY_ID="$((Get-AWSCredentials -ProfileName alexa).GetCredentials().AccessKey)" -e AWS_SECRET_ACCESS_KEY="$((Get-AWSCredentials -ProfileName alexa).GetCredentials().SecretKey)" -e AWS_REGION='us-east-1' $volume $image $command
 "@
 }
 
+Function Convert-Path {
+  Param([String] $Path)
+  $Path.Replace("C:\", "/c/").Replace('\', '/')
+}
+
 Function Create-Stack {
-  Invoke-AWS -stack (get-childitem "stack.json").fullname `
-  -command "cloudformation create-stack --stack-name alexa-bom --template-body file:///app/stack.json"
+  Invoke-AWS -volume (get-childitem "stack.json").fullname `
+    -command "cloudformation", "create-stack", "--region", "us-east-1", "--stack-name", "alexa-bom", "--template-body", "file:///app/stack.json"
 }
 
 Function Get-AccountId {
-  Invoke-AWS -command "sts get-caller-identity --query 'Account' --output text"
+  Invoke-AWS -command "sts", "get-caller-identity", "--query", "Account", "--output", "text"
 }
 
 Function Get-LambdaRoleName {
@@ -40,14 +42,14 @@ Function Get-LambdaRole {
 }
 
 Function Update-Project {
-  $project = Get-Content -Path "app/project.json" | ConvertFrom-Json
-  $project['role'] = Get-LambdaRole
-  Convert-ToJson $project | Set-Content -Path "app/project.json"
+  $project = (Get-Content -Path "app/project.json" | ConvertFrom-Json)
+  $project.role = Get-LambdaRole
+  ConvertTo-Json $project | Set-Content -Path "app/project.json"
 }
 
 Function Deploy-Lambda {
   docker build -t bom-deploy .
-  Invoke-AWS -image "bom-deploy" -command "deploy"
+  Invoke-AWS -image "bom-deploy" -command @("deploy")
 }
 
 Function main {
@@ -56,5 +58,5 @@ Function main {
   Deploy-Lambda
 }
 
-docker pull cgswong/aws:aws
+#docker pull cgswong/aws:aws
 main

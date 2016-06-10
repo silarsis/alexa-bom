@@ -26,7 +26,7 @@ Function Convert-Path {
 
 Function Create-Stack {
   Invoke-AWS -volume (get-childitem "stack.json").fullname `
-    -command "cloudformation", "create-stack", "--region", "us-east-1", "--stack-name", "alexa-bom", "--template-body", "file:///app/stack.json"
+    -command "cloudformation", "create-stack", "--region", "us-east-1", "--stack-name", "alexa-bom", "--template-body", "file:///app/stack.json", "--capabilities", "CAPABILITY_IAM"
 }
 
 Function Get-AccountId {
@@ -49,7 +49,7 @@ Function Update-Project {
 
 Function Deploy-Lambda {
   docker build -t bom-deploy .
-  Invoke-AWS -image "bom-deploy" -command @("deploy")
+  Invoke-AWS -image "bom-deploy" -command "deploy"
 }
 
 Function main {
